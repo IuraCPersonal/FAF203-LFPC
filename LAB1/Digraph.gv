@@ -22,7 +22,7 @@ digraph {
 	S -> L [label=d]
 	node [shape=circle]
 	S
-	node [shape=doublecircle]
+	node [shape=circle]
 	Q
 	S -> Q [label=e]
 	node [shape=circle]
@@ -42,7 +42,7 @@ digraph {
 	L -> D [label=j]
 	node [shape=circle]
 	L
-	node [shape=doublecircle]
+	node [shape=circle]
 	Q
 	L -> Q [label=e]
 	node [shape=circle]
@@ -52,7 +52,7 @@ digraph {
 	D -> D [label=e]
 	node [shape=circle]
 	D
-	node [shape=doublecircle]
+	node [shape=circle]
 	Q
 	D -> Q [label=d]
 }

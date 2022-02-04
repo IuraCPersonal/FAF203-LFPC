@@ -1,6 +1,5 @@
 # Importing all needed libraries.
 import os
-import time
 import random
 import graphviz as gz
 
@@ -40,17 +39,48 @@ for nonterminal in set_of_productions:
 # Computing the Finite Automaton (FA).
 finite_automaton = dict()
 for production in __set_of_productions:
+    finite_automaton[production] = []
     for result in __set_of_productions[production]:
         if len(result) == 2:
             # random.randint(0, 100000) is just a dummy way to work around dublicates.
-            finite_automaton.update(
-                {(production, result[0], random.randint(0, 100000)): result[1]})
+            # finite_automaton.update(
+            #     {(production, result[0], random.randint(0, 100000)): result[1]})
+            finite_automaton[production].append((result[0], result[1]))
         else:
-            finite_automaton.update(
-                {(production, result, random.randint(0, 100000)): 'Q'})
+            # finite_automaton.update(
+            #     {(production, result, random.randint(0, 100000)): 'Q'})
+            finite_automaton[production].append((result, 'Q'))
+
 
 # DEBUG:
 print(finite_automaton)
+
+# Function to check if the given string belongs to the language L(G).
+def is_accepted(string, adjacency_matrix, start_node='S'):
+    # Set the current node to the start one.
+    current_node = start_node
+    for c in string:
+        if current_node == 'Q':
+            return False
+
+        for weight, adj_node in adjacency_matrix[current_node]:
+            if c == weight:
+                current_node = adj_node
+                break
+        else:
+            return False
+    
+    # Check if the last node is other then Empty.
+    if current_node != 'Q':
+        for prod in adjacency_matrix[current_node]:
+            # If there exists a prod with the exact weight like the last character and the adjacency node empty.
+            if prod[0] == string[-1] and prod[1] == 'Q':
+                return True
+
+    # Return True or False if the current (last) node is the empty one.
+    return current_node == 'Q'
+
+print(is_accepted('e', finite_automaton))
 
 # BONUS POINT:
 # Ploting the FA Graph.
@@ -61,19 +91,20 @@ G.attr(rankdir='LR', size='8,5')
 
 # Compute all nodes.
 for element in finite_automaton:
-    G.attr('node', shape='circle')
-    G.node(element[0])
-
-    # Check for the empty node.
-    if finite_automaton[element] == 'Q':
-        G.attr('node', shape='doublecircle')
-        G.node(finite_automaton[element])
-    else:
+    for weight, adj_node in finite_automaton[element]:
         G.attr('node', shape='circle')
-        G.node(finite_automaton[element])
+        G.node(element)
 
-    # Add the labels.
-    G.edge(element[0], finite_automaton[element], label=element[1])
+        # Check for the empty node.
+        if finite_automaton[element] == 'Q':
+            G.attr('node', shape='doublecircle')
+            G.node(adj_node)
+        else:
+            G.attr('node', shape='circle')
+            G.node(adj_node)
+
+        # Add the labels.
+        G.edge(element, adj_node, label=weight)
 
 # Show/Export the Graph.
 G.view()
