@@ -80,7 +80,7 @@ def is_accepted(string, adjacency_matrix, start_node='S'):
     # Return True or False if the current (last) node is the empty one.
     return current_node == 'Q'
 
-print(is_accepted('e', finite_automaton))
+print(is_accepted('aade', finite_automaton))
 
 # BONUS POINT:
 # Ploting the FA Graph.
@@ -89,22 +89,32 @@ print(is_accepted('e', finite_automaton))
 G = gz.Digraph()
 G.attr(rankdir='LR', size='8,5')
 
+g_dict = {}
+count = -1
+
+for element in non_terminal_symbols:
+    count += 1
+    g_dict[element] = "q{}".format(count)
+
+g_dict['Q'] = "q{}".format(count + 1)
+# print(g_dict)
+
 # Compute all nodes.
 for element in finite_automaton:
     for weight, adj_node in finite_automaton[element]:
         G.attr('node', shape='circle')
-        G.node(element)
+        G.node(g_dict[element])
 
         # Check for the empty node.
-        if finite_automaton[element] == 'Q':
+        if adj_node == 'Q':
             G.attr('node', shape='doublecircle')
-            G.node(adj_node)
+            G.node(g_dict[adj_node])
         else:
             G.attr('node', shape='circle')
-            G.node(adj_node)
+            G.node(g_dict[adj_node])
 
         # Add the labels.
-        G.edge(element, adj_node, label=weight)
+        G.edge(g_dict[element], g_dict[adj_node], label=weight)
 
 # Show/Export the Graph.
-G.view()
+# G.view()
