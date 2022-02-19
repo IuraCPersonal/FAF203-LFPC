@@ -1,58 +1,61 @@
 digraph {
 	rankdir=LR size="8,5"
 	node [shape=circle]
-	S
+	q0
 	node [shape=circle]
-	S
-	S -> S [label=a]
+	q0
+	q0 -> q0 [label=a]
 	node [shape=circle]
-	S
+	q0
 	node [shape=circle]
-	S
-	S -> S [label=b]
+	q0
+	q0 -> q0 [label=b]
 	node [shape=circle]
-	S
+	q0
 	node [shape=circle]
-	D
-	S -> D [label=c]
+	q2
+	q0 -> q2 [label=c]
 	node [shape=circle]
-	S
+	q0
 	node [shape=circle]
-	L
-	S -> L [label=d]
+	q1
+	q0 -> q1 [label=d]
 	node [shape=circle]
-	S
+	q0
+	node [shape=doublecircle]
+	q4
+	q0 -> q4 [label=e]
 	node [shape=circle]
-	Q
-	S -> Q [label=e]
+	q1
 	node [shape=circle]
-	L
+	q1
+	q1 -> q1 [label=e]
 	node [shape=circle]
-	L
-	L -> L [label=e]
+	q1
 	node [shape=circle]
-	L
+	q1
+	q1 -> q1 [label=f]
 	node [shape=circle]
-	L
-	L -> L [label=f]
+	q1
 	node [shape=circle]
-	L
+	q2
+	q1 -> q2 [label=j]
 	node [shape=circle]
-	D
-	L -> D [label=j]
+	q1
+	node [shape=doublecircle]
+	q4
+	q1 -> q4 [label=e]
 	node [shape=circle]
-	L
+	q2
 	node [shape=circle]
-	Q
-	L -> Q [label=e]
+	q2
+	q2 -> q2 [label=e]
 	node [shape=circle]
-	D
-	node [shape=circle]
-	D
-	D -> D [label=e]
-	node [shape=circle]
-	D
-	node [shape=circle]
-	Q
-	D -> Q [label=d]
+	q2
+	node [shape=doublecircle]
+	q4
+	q2 -> q4 [label=d]
+	node [shape=none]
+	""
+	"" -> q0
 }
