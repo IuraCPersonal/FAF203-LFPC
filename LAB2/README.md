@@ -33,4 +33,4 @@
 | q1q2 | [q1, q2] | [q1, q3] |
 | q1q3 |       q2 |       q1 |
 
-For the graph view <a href="./Diagraph.gv.pdf">Diagraph.gv.pdf</a>
+For the graph view <a href="https://github.com/IuraCPersonal/FAF203-LFPC/blob/main/LAB2/Digraph.gv.pdf">Diagraph.gv.pdf</a>
