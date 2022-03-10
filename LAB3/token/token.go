@@ -73,7 +73,7 @@ var Keywords = map[string]TokenType{
 	"while":  WHILE,
 	"return": RETURN,
 	"int":    INT,
-	"float":  DOUBLE,
+	"double":  DOUBLE,
 	"string": STRING,
 	"char":   CHAR,
 }
