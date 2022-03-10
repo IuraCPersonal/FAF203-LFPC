@@ -21,10 +21,10 @@ All the solutions are written in **Python**.
 
 ## Progress
 
-- ✔ Lab 01
-- ⚠ Lab 02
-- ⚠ Lab 03
 
+- ✔ Lab 01
+- ✔ Lab 02
+- ✔ Lab 03
 
 ## Contact
 
