@@ -47,6 +47,7 @@ const (
 	RPAREN    = "RPAREN"    // )
 	LBRACE    = "LBRACE"    // {
 	RBRACE    = "RBRACE"    // }
+	QUOTE     = "QUOTE"     // "
 
 	// Keywords
 	FUNCTION = "FUNCTION"
@@ -72,7 +73,7 @@ var Keywords = map[string]TokenType{
 	"while":  WHILE,
 	"return": RETURN,
 	"int":    INT,
-	"double": DOUBLE,
+	"float":  DOUBLE,
 	"string": STRING,
 	"char":   CHAR,
 }

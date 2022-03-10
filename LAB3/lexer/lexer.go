@@ -56,7 +56,7 @@ func (l *Lexer) peekChar() byte {
 	}
 }
 
-// Reads in an identifier and advances our lexer’s positions until it encounters a non-letter-character.
+// Reads in an identifier and advances our lexer’s positions until it encounters a non-digit.
 func (l *Lexer) readNumber() string {
 	position := l.position
 	for isDigit(l.ch) {
@@ -64,6 +64,16 @@ func (l *Lexer) readNumber() string {
 	}
 	return l.input[position:l.position]
 
+}
+
+// Reads the string between quotation marks.
+func (l *Lexer) readString() string {
+	position := l.position
+	for isChar(l.ch) {
+		l.readChar()
+	}
+
+	return l.input[position:l.position]
 }
 
 // Reads in an identifier and advances our lexer’s positions until it encounters a non-letter-character.
@@ -162,6 +172,9 @@ func (l *Lexer) nextToken() token.Token {
 		tok = newToken(token.LBRACE, l.ch)
 	case '}':
 		tok = newToken(token.RBRACE, l.ch)
+	case '"':
+		l.readChar()
+		tok = token.Token{Type: token.STRING, Value: string(l.readString())}
 	default:
 		if isChar(l.ch) {
 			tok.Value = l.readIdentifier()
