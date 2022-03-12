@@ -10,7 +10,7 @@ class Lexer:
         self.ch = ''
         self.__read_char()
 
-        
+
     # Checks whether the given argument is a number.    
     def __is_digit(self, ch):
         return str(ch).isnumeric()
@@ -121,6 +121,9 @@ class Lexer:
                 tok = self.new_token(TOKENS.tokens['LBRACE'], self.ch)
             case '}':
                 tok = self.new_token(TOKENS.tokens['RBRACE'], self.ch)
+            case '"':
+                self.__read_char()
+                tok = self.new_token(TOKENS.tokens['STRING'], self.__read_identifier())
             case _:
                 if self.__is_char(self.ch):
                     tok.Value = self.__read_identifier()
