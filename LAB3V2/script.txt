@@ -2,7 +2,7 @@ let add = fn(x, y) {
     
     int sum = x + y;
 
-    return sum0;
+    return sum;
 };
 
 int main() {
@@ -15,7 +15,7 @@ int main() {
     if (result == 15) {
         s = "bingo";
     } else {
-        s = "nice try";
+        s = "nice";
     }
 
     return 0;
