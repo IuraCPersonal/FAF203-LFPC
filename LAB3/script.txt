@@ -1,0 +1,23 @@
+let add = fn(x, y) {
+    
+    int sum = x + y;
+
+    return sum;
+};
+
+int main() {
+
+    let s = "";
+    let five = 5;
+    let ten = 10;
+    let result = add(five, ten);
+
+    if (result == 15) {
+        s = "bingo";
+    } else {
+        s = "nice";
+    }
+
+    return 0;
+}
+
