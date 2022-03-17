@@ -1,4 +1,4 @@
-from itertools import product
+import itertools
 
 class Grammar:
     def __init__(self, grammar, terminal_symbols, non_terminal_symbols, start='S'):
@@ -10,7 +10,7 @@ class Grammar:
 
     def __filter(self, word, to_replace, replacement):
         options = [(c,) if c != to_replace else (to_replace, replacement) for c in word]
-        return ("".join(o) for o in product(*options))
+        return ("".join(o) for o in itertools.product(*options))
 
     def check_start_symbol(self):
         """
@@ -27,23 +27,40 @@ class Grammar:
         """
         Remove Null Productions.
         """
-        nullable_variables = []
+        nullable_variables = set() 
+        to_remove = [] 
         for production in self.grammar:
             if 'Q' in production[1]:
-                nullable_variables.append(production[0])
+                nullable_variables.update(set(production[0]))
+                to_remove.append(self.grammar.index(production))
+
+        print(to_remove)
+
+        for nullable_production_idx in sorted(to_remove, reverse=True):
+            del self.grammar[nullable_production_idx]
 
         # DEBUG:
-        print(nullable_variables)
+        # print(nullable_variables)
+ #        test = []
+ #        grammar_cp = self.grammar.copy()
+ #        for nullable in nullable_variables:
+ #            for i in range(len(self.grammar)):
+ #                if nullable in self.grammar[i][1]:
+ #                    X = list(self.__filter(self.grammar[i][1], nullable, ''))
+ #                    print(X)
+ #                    test.append(X)
+                    # print('DEBUG:', X)
+                    # grammar_cp[i][1] = "|".join(X) if '' not in X else ''
 
-        grammar_cp = self.grammar.copy()
-        for nullable in nullable_variables:
-            for i in range(len(self.grammar)):
-                if nullable in self.grammar[i][1]:
-                    X = list(self.__filter(self.grammar[i][1], nullable, ''))
-                    print('DEBUG:', X)
-                    grammar_cp[i][1] = "|".join(X) if '' not in X else ''
+        __grammar = self.grammar.copy()
+        for production in self.grammar:
+            if any((ch in production[1]) for ch in nullable_variables):
+                X = [list(self.__filter(production[1], nullable, '')) for nullable in nullable_variables]
+                # Don't even ask lol
+                X = list(set(list(itertools.chain(*X))))
+                __grammar[self.grammar.index(production)][1] = '|'.join(X) 
 
-
+        print(__grammar)
 
 
 
@@ -92,15 +109,15 @@ grammar2 = [
 terminal_symbols = ['a', 'b']
 non_terminal_symbols = ['S', 'A', 'B', 'C', 'D']
 
-CFG = Grammar(grammar2, terminal_symbols, non_terminal_symbols)
+CFG = Grammar(grammar, terminal_symbols, non_terminal_symbols)
 
-print(grammar2)
+print(grammar)
 
-print("+---------------+")
+# print("+---------------+")
 CFG.check_start_symbol()
-print(CFG.grammar)
+# print(CFG.grammar)
 
-print("+---------------+")
+# print("+---------------+")
 CFG.remove_empty()
-print(CFG.grammar)
+# print(CFG.grammar)
 
