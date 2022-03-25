@@ -25,6 +25,7 @@ All the solutions are written in **Python**.
 - ✔ Lab 01
 - ✔ Lab 02
 - ✔ Lab 03
+- ⚠ Lab 04
 
 ## Contact
 
