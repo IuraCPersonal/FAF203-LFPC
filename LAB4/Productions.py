@@ -40,16 +40,24 @@ class Productions:
         return False
 
 
-    def filter(self, production, nullable):
-        options = [(c,) if c != nullable else (nullable, '') for c in production]
-        return list("".join(o) for o in itertools.product(*options))
+    def filter(self, productions, nullable):
+        updated_productions = []
+        for production in productions:
+            options = [(c,) if c != nullable else (nullable, '') for c in production]
+            foo = list("".join(o) for o in itertools.product(*options))
+            updated_productions.append(foo)
+        return updated_productions
 
 
     def replace_nullables(self, productions, nullables):
+        count = 0
         for prod in productions:
             for nullable in nullables:
-                if nullable in prod:
-                    pass
+                if nullable == prod:
+                    index = productions.index(prod)
+                    productions[index] = 'Q'
+                    count = count + 1
+        return (productions, count)
     
 
 
