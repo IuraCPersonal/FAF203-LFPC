@@ -1,0 +1,27 @@
+#+TITLE: LFPC Laboratory Works
+#+AUTHOR: FCIM FAF-203 Cius Iurie
+#+DESCRIPTION: Homework Assignments for the LFPC course.
+
+* Introduction
+
+** About Course
+
+The main objective of the course is to introduce the fundamental notions about formal languages (Chomsky classification of Languages, Regular Languages, Automata, Context Free Grammars, Push Down Automata, Turing Machine) and understand the mechanisms governing the analysis and synthesis of programming languages.
+
+** About this Repository
+
+This repository contains homework assignments and laboratory works for the =LFPC= course here at =TUM FCIM=.
+
+All the solutions are written in =Python= and =Go Lang=.
+
+* Progress
+
++ ✔ Lab 01
++ ✔ Lab 02
++ ✔ Lab 03
++ ✔ Lab 04
++ ✔ Lab 05
+
+* Contact
+
+If you have any question, please contact me through email: =iurie.cius@isa.utm.md=.
