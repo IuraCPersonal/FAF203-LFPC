@@ -1,0 +1,257 @@
+#+TITLE: Laboratory Task #2
+#+AUTHOR: FCIM FAF-203 Cius Iurie
+#+DESCRIPTION: NFA to DFA conversion
+#+STARTUP: showeverything
+#+PROPERTY: header-args :tangle script.py
+#+OPTIONS: tex:t
+
+* LABORATORY TASKS
+
+1. Present the automaton in form of graph. Is this automaton deterministic or no? Why?
+2. Convert a Finite Automaton to the Regular Grammar.
+3. Transform nondeterministic finite automaton (NFA ) into a deterministic automaton (DFA). Present the DFA in form of graph. 
+
+* IMPLEMENTATION
+
+** Before we begin
+
+Convert NFA from your variant to DFA on paper, writing all transitions and drawing converted automato.
+
+[[https://raw.githubusercontent.com/IuraCPersonal/lfpc/main/LAB2/NFA-to-DFA.png?token=GHSAT0AAAAAABXGBE6NGBCC4HFJPKTSHOMSYXLTOPA]]
+
+** Setup Script
+
+A few imports and variables required.
+
+*** Import required libraries
+
+#+begin_src python
+import math
+import graphviz as gz
+import pandas as pd
+#+end_src
+
+*** Initialize the NFA
+
+#+begin_src python
+set_of_states = ['q0', 'q1', 'q2', 'q3']
+input_alphabet = ['a', 'b']
+final_state = ['q3']
+transitions = [
+    [('q0', 'a'), 'q1'],
+    [('q0', 'a'), 'q2'],
+    [('q1', 'b'), 'q1'],
+    [('q1', 'a'), 'q2'],
+    [('q2', 'a'), 'q1'],
+    [('q2', 'b'), 'q3'],
+
+]
+#+end_src
+
+** Create the NFA class
+
+#+begin_src python
+class NFA:
+    def __init__(self, set_of_states, input_alphabet, final_state, transitions=None) -> None:
+        self.set_of_states = set_of_states
+        self.input_alphabet = input_alphabet
+        self.final_state = final_state
+        self.transitions = transitions
+        self.dict_transitions = {}
+        self.dict_transitions_dfa = {}
+        self.set_of_states_dfa = []
+
+    # Function to get the transitions.
+
+    def get_transitions(self):
+        if self.transitions == None:
+            self.transitions = []
+            while True:
+                transition = input().split()
+                if transition == []:
+                    break
+                else:
+                    self.transitions.append(
+                        [tuple([transition[0], transition[1]]), transition[2]])
+        else:
+            pass
+
+        for transition in transitions:
+            self.dict_transitions[transition[0]] = [state[1]
+                                                    for state in transitions if transition[0] == state[0]]
+            if len(self.dict_transitions[transition[0]]) == 1:
+                self.dict_transitions[transition[0]
+                                      ] = self.dict_transitions[transition[0]][0]
+
+        # ------------------ DEBUG:
+        # print(self.dict_transitions)
+
+    # Initialize the transformation, find the new states and transitions.
+
+    def __init_transformation(self):
+        self.set_of_states_dfa = self.set_of_states.copy()
+        for state in self.set_of_states:
+            for letter in self.input_alphabet:
+                if (state, letter) in self.dict_transitions:
+                    if type(self.dict_transitions[(state, letter)]) is list:
+                        self.set_of_states_dfa.append(
+                            self.dict_transitions[(state, letter)])
+
+        self.dict_transitions_dfa = self.dict_transitions.copy()
+        for i in range(len(self.set_of_states_dfa)):
+            if type(self.set_of_states_dfa[i]) is list:
+                for letter in self.input_alphabet:
+                    new_state = set()
+                    for state in self.set_of_states_dfa[i]:
+                        if (state, letter) in self.dict_transitions:
+                            if type(self.dict_transitions[(state, letter)]) is list:
+                                new_state.update(
+                                    set(self.dict_transitions[(state, letter)]))
+                            else:
+                                new_state.update(
+                                    set([self.dict_transitions[(state, letter)]]))
+                    if new_state != set():
+                        self.dict_transitions_dfa[(''.join(self.set_of_states_dfa[i]), letter)] = sorted(
+                            new_state) if len(new_state) > 1 else new_state.pop()
+
+    # Update the states.
+    def __update_states(self):
+        for transition in self.dict_transitions_dfa:
+            if self.dict_transitions_dfa[transition] not in self.set_of_states_dfa:
+                self.set_of_states_dfa.append(
+                    self.dict_transitions_dfa[transition])
+
+    # Update the transitions.
+
+    def __update_transitions(self):
+        for i in range(len(self.set_of_states_dfa)):
+            if type(self.set_of_states_dfa[i]) is list:
+                for letter in self.input_alphabet:
+                    temp = set()
+                    for state in self.set_of_states_dfa[i]:
+                        if (state, letter) in self.dict_transitions_dfa:
+                            if type(self.dict_transitions_dfa[(state, letter)]) is list:
+                                temp.update(
+                                    set(self.dict_transitions_dfa[(state, letter)]))
+                            else:
+                                temp.update(
+                                    set([self.dict_transitions_dfa[(state, letter)]]))
+                    if len(temp) != 0:
+                        self.dict_transitions_dfa[(''.join(self.set_of_states_dfa[i]), letter)] = sorted(
+                            temp) if len(temp) > 1 else temp.pop()
+
+    # Update the final states.
+
+    def __update_final_states(self):
+        # Converting the states in plain string.
+        for i in range(len(self.set_of_states_dfa)):
+            self.set_of_states_dfa[i] = ''.join(self.set_of_states_dfa[i])
+
+        for state in self.set_of_states_dfa:
+            if self.final_state[0] in state and state not in self.final_state:
+                self.final_state.append(state)
+
+    # Transform the NFA to DFA.
+
+    def transform_to_dfa(self):
+        self.__init_transformation()
+        for i in range(math.factorial(len(self.set_of_states))):
+            self.__update_states()
+            self.__update_transitions()
+        self.__update_final_states()
+        print("SUCCES!")
+
+    # Create the transition table.
+
+    def create_table(self):
+        # Building the transtion table.
+        transition_table = []
+        for state in self.set_of_states_dfa:
+            transition_table.append([])
+            for letter in self.input_alphabet:
+                if (state, letter) in self.dict_transitions_dfa:
+                    transition_table[-1].append(
+                        self.dict_transitions_dfa[(state, letter)])
+
+        # Creating the transition Data Frame.
+        transition_df = pd.DataFrame(
+            transition_table,
+            columns=self.input_alphabet,
+            index=self.set_of_states_dfa
+        )
+
+        return transition_df
+
+    def plot_graph(self):
+        # Initialize the Graph.
+        G = gz.Digraph()
+        G.attr(rankdir='LR', size='8,5')
+
+        # Compute all nodes.
+        for element in self.dict_transitions_dfa:
+            G.attr('node', shape='circle')
+            G.node(element[0])
+
+            temp = ''.join(self.dict_transitions_dfa[element])
+            if temp in self.final_state:
+                G.attr('node', shape='doublecircle')
+                G.node(temp)
+            else:
+                G.attr('node', shape='circle')
+                G.node(temp)
+
+            # Add the labels.
+            G.edge(element[0], ''.join(
+                self.dict_transitions_dfa[element]), label=element[1])
+
+        # Add the start arrow.
+        G.attr('node', shape='none')
+        G.node('')
+        G.edge('', 'q0')
+
+        # Show/Export the Graph.
+        G.view()
+#+end_src
+
+* RESULTS
+
+** Initialize object
+
+#+begin_src python
+nfa = NFA(set_of_states, input_alphabet, final_state, transitions)
+#+end_src
+
+** Show converted automato in form of graph
+
+#+begin_src python
+nfa.get_transitions()
+nfa.transform_to_dfa()
+nfa.plot_graph()
+#+end_src
+
+[[https://raw.githubusercontent.com/IuraCPersonal/lfpc/main/LAB2/DFA.png?token=GHSAT0AAAAAABXGBE6MNQ32UWEKAU6RUTVKYXLTULQ]]
+
+** Show the DFA
+
+#+begin_example
+{('q0', 'a'): ['q1', 'q2'],
+ ('q1', 'b'): 'q1',
+ ('q1', 'a'): 'q2',
+ ('q2', 'a'): 'q1',
+ ('q2', 'b'): 'q3',
+ ('q1q2', 'a'): ['q1', 'q2'],
+ ('q1q2', 'b'): ['q1', 'q3'],
+ ('q1q3', 'a'): 'q2',
+ ('q1q3', 'b'): 'q1'}
+#+end_example
+
+** Show the transitions table
+
+|      |        a |        b |
+|------+----------+----------|
+|   q0 | [q1, q2] |     None |
+|   q1 |       q2 |       q1 |
+|   q2 |       q1 |       q3 |
+|   q3 |     None |     None |
+| q1q2 | [q1, q2] | [q1, q3] |
+| q1q3 |       q2 |       q1 |
