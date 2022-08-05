@@ -16,11 +16,11 @@ All the solutions are written in =Python= and =Go Lang=.
 
 * Progress
 
-+ ✔ Lab 01
-+ ✔ Lab 02
-+ ✔ Lab 03
-+ ✔ Lab 04
-+ ✔ Lab 05
++ ✔ [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB1][Lab 01]]
++ ✔ [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB2][Lab 02]]
++ ✔ [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB3][Lab 03]]
++ ✔ [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB4][Lab 04]]
++ ✔ [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB5][Lab 05]]
 
 * Contact
 
