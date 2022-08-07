@@ -1,3 +1,5 @@
+# _IMPORTANT__ THE CNF IS NOT FINISHED
+
 # Theme: Chomsky Normal Form (__CNF__)
 
 ### Laboratory Tasks:
