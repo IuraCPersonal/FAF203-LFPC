@@ -1,27 +1,32 @@
-#+TITLE: LFPC Laboratory Works
+#+TITLE: FORMAL LANGUAGES AND COMPILER DESIGN
 #+AUTHOR: FCIM FAF-203 Cius Iurie
 #+DESCRIPTION: Homework Assignments for the LFPC course.
 
-* Introduction
+** 👋 TABLE OF CONTENTS :toc:
+  - [[#-introduction][📑 INTRODUCTION]]
+  - [[#-progress][🎯 PROGRESS]]
+  - [[#-contact][📮 CONTACT]]
 
-** About Course
+** 📑 INTRODUCTION
 
-The main objective of the course is to introduce the fundamental notions about formal languages (Chomsky classification of Languages, Regular Languages, Automata, Context Free Grammars, Push Down Automata, Turing Machine) and understand the mechanisms governing the analysis and synthesis of programming languages.
-
-** About this Repository
+*** About this Repository
 
 This repository contains homework assignments and laboratory works for the =LFPC= course here at =TUM FCIM=.
 
-All the solutions are written in =Python= and =Go Lang=.
+All the solutions are written in =Python=.
 
-* Progress
+** 🎯 PROGRESS
 
-+ ✔ [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB1][Lab 01]]
-+ ✔ [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB2][Lab 02]]
-+ ✔ [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB3][Lab 03]]
-+ ✔ [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB4][Lab 04]]
-+ ✔ [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB5][Lab 05]]
+| Laboratory No. | Status |
+|----------------+--------|
+| [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB1][LAB 01]]   | =DONE= |
+| [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB2][LAB 02]]   | =DONE= |
+| [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB3][LAB 03]]   | =DONE= |
+| [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB4][LAB 04]]   | =DONE= |
+| [[https://github.com/IuraCPersonal/lfpc/tree/main/LAB5][LAB 04]]   | =DONE= |
+|----------------+--------|
 
-* Contact
+** 📮 CONTACT
 
 If you have any question, please contact me through email: =iurie.cius@isa.utm.md=.
+
